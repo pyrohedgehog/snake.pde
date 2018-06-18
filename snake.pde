@@ -52,6 +52,7 @@ void draw()
 
     if ((time % 3)==0)
     {
+      time=time%3;
       travel();
       display();
       checkdead();
