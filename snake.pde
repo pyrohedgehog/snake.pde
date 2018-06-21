@@ -54,7 +54,26 @@ void draw()
     {
       travel();
       display();
-      checkdead();
+      if(checkdead()){
+  
+        PFont font;
+        font = loadFont("bitwonder.vlw");//this font doesnt work for me, but if it does for you...
+        for (int i=2; i<=snakesize; i++)
+        fill(255);
+        textFont(font, 50);
+        text("GAME OVER", 250, 250);
+        fill(255);
+        textFont(font, 12.5);
+        text("PRESS SHIFT TO TRY AGAIN", 250, 270);
+        stopgame=true;
+        //score class #1
+        Score score = new Score();
+        score.loadScoreBoard();
+
+        // display player information #1
+        Player player = new Player();
+        player.displayPlayer();
+      }
     }
   }
 }
@@ -160,55 +179,23 @@ void display()
 
 
 }
-void checkdead()
-{
+boolean checkdead(){
   //loading in font for 'Game Over', plus Score class.
-  PFont font;
-  font = loadFont("bitwonder.vlw");
-  for (int i=2; i<=snakesize; i++)
-  {
+  boolean holdie=false;//needed to have 1 return, removing annoying errors
+  for (int i=2; i<=snakesize; i++){
     // if the snake eats itself..
-    if (headx[1]==headx[i] && heady[1]==heady[i])
-    {
-      fill(255);
-      textFont(font, 50);
-      text("GAME OVER", 250, 250);
-      fill(255);
-      textFont(font, 12.5);
-      text("PRESS SHIFT TO TRY AGAIN", 250, 270);
-      stopgame=true;
-
-              //score class #1
-        Score score = new Score();
-        score.loadScoreBoard();
-
-  // display player information #1
-  Player player = new Player();
-  player.displayPlayer();
-
-
-    }
-    //if the snake charges into the wall..
-    if (headx[1]>=(width-8) || heady[1]>=(height-8) || headx[1]<=0 || heady[1]<=0)
-    {
-      fill(255);
-      textFont(font, 50);
-      text("GAME OVER", 250, 250);
-      fill(255);
-      textFont(font, 12.5);
-      text("PRESS SHIFT TO TRY AGAIN", 250, 270);
-      stopgame=true;
-             //score class #2
-        Score score = new Score();
-        score.loadScoreBoard();
-
-
-  // display player information #2
-  Player player = new Player();
-  player.displayPlayer();
-
+    if (headx[1]==headx[i] && heady[1]==heady[i]){
+      holdie=true;
+    }//if the snake charges into the wall..
+    if (headx[1]>=(width-8) || heady[1]>=(height-8) || headx[1]<=0 || heady[1]<=0){
+      holdie = true;
     }
   }
+  if(holdie) {
+     return true; 
+    }else{
+     return false; 
+    }
 }
 void restart()
 {
